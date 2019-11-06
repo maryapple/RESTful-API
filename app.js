@@ -9,9 +9,11 @@ app.use(bodyParser.json())
 
 // import routes
 const postsRoute = require('./routes/posts')
+const usersRoute = require('./routes/users')
 
 // Middleware
 app.use('/posts', postsRoute)
+app.use('/users', usersRoute)
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -19,11 +21,9 @@ app.get('/', (req, res) => {
 })
 
 // Connect to DB
-mongoose.connect(
-    process.env.DB_CONNECTION,
-    { useNewUrlParser: true},
-    () => console.log('connected to DB')
-)
+mongoose.connect(process.env.DB_CONNECTION)
+    .then(() => console.log('connected to DB'))
+    .catch (e => console.log(e))
 
 // Listening to the server
 app.listen(3000)
